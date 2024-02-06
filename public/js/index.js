@@ -1,10 +1,11 @@
 const myModal = new bootstrap.Modal("#register-modal");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
-
+const form = document.getElementById('form');
+const campos = document.querySelectorAll('.required');
 checkLogged();
 
-//logar no sistema
+//Logar no sistema
 document.getElementById("login-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -37,8 +38,8 @@ document.getElementById("create-form").addEventListener("submit", function(e) {
     
     const email = document.getElementById("email-create-input").value;
     const password = document.getElementById("password-create-input").value;
+    const passwordConfirm = document.getElementById("password-create-input2").value;
     
-
     if(email.length < 5) {
         alert("preencha o campo com um e-mail válido.");
         return;
@@ -48,7 +49,13 @@ document.getElementById("create-form").addEventListener("submit", function(e) {
         alert("Preencha a senha com no mínimo 4 dígitos.");
         return;
     }
-
+    
+      
+    if (password != passwordConfirm) {
+        alert("As senhas inseridas não conferem!");
+        return;
+    }
+    
     saveAccount({
         login: email,
         password: password,
@@ -56,10 +63,11 @@ document.getElementById("create-form").addEventListener("submit", function(e) {
     });
 
     myModal.hide();
-
-    alert("Conta criada com sucesso");
-
+    
 });
+
+
+
 
 function checkLogged() {
     if(session) {
